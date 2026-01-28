@@ -44,3 +44,4 @@ The client will start on `http://localhost:5173`.
 2.  **Add Item**: Click the "+" button to open the modal. (Create)
 3.  **Edit/Delete**: Use the icon buttons on each card. (Update and Delete)
 # Inventory-Management-CRUD
+# Inventory-Management-CRUD
