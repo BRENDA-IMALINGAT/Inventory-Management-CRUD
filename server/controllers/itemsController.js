@@ -1,8 +1,7 @@
 const { db } = require('../config/firebase');
 
-// Simple in-memory store for fallback mode
 let localItems = [
-    { id: '1', title: 'Welcome Item', description: 'This is a sample item served from Node.js (In-Memory). Add valid Firebase credentials to persist data to Firestore.', createdAt: new Date().toISOString() }
+    { id: '1', title: 'Welcome Item', description: 'Sample in-memory item. Add Firebase credentials for persistence.', createdAt: new Date().toISOString() }
 ];
 
 const getCollection = () => db.collection('items');
@@ -24,7 +23,6 @@ exports.getItems = async (req, res) => {
 exports.createItem = async (req, res) => {
     try {
         const { title, description } = req.body;
-        // Basic validation
         if (!title) return res.status(400).json({ error: 'Title is required' });
 
         const newItem = { title, description, createdAt: new Date().toISOString() };
@@ -34,12 +32,10 @@ exports.createItem = async (req, res) => {
             return res.status(201).json({ id: docRef.id, ...newItem });
         }
 
-        // Local fallback
         const id = Date.now().toString();
         const localItem = { id, ...newItem };
-        localItems.unshift(localItem); // Add to beginning
+        localItems.unshift(localItem);
         return res.status(201).json(localItem);
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -61,7 +57,6 @@ exports.updateItem = async (req, res) => {
             return res.json(localItems[index]);
         }
         return res.status(404).json({ error: 'Item not found' });
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -82,9 +77,7 @@ exports.deleteItem = async (req, res) => {
         if (localItems.length === initialLength) {
             return res.status(404).json({ error: 'Item not found' });
         }
-
         return res.json({ message: 'Item deleted' });
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

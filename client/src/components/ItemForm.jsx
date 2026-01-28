@@ -24,9 +24,9 @@ const ItemForm = ({ item, onClose, onSave }) => {
         <div className="glass-modal-overlay">
             <div className="glass-modal">
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2rem', alignItems: 'center' }}>
-                    <h2>{item ? 'Edit Item' : 'New Item'}</h2>
-                    <button onClick={onClose} className="btn-icon">
-                        <X size={24} />
+                    <h2>{item ? 'Edit Record' : 'Create New Record'}</h2>
+                    <button onClick={onClose} className="icon-btn">
+                        <X size={20} />
                     </button>
                 </div>
                 <form onSubmit={handleSubmit}>

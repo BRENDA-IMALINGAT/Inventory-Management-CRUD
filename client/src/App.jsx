@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Layout } from 'lucide-react';
+import { Plus, Package } from 'lucide-react';
 import ItemCard from './components/ItemCard';
 import ItemForm from './components/ItemForm';
 import { getItems, createItem, updateItem, deleteItem } from './services/api';
@@ -62,39 +62,68 @@ function App() {
 
   return (
     <div className="container">
-      <div className="glass-panel">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ background: 'linear-gradient(135deg, var(--primary), var(--secondary))', padding: '10px', borderRadius: '12px', display: 'flex' }}>
-              <Layout color="white" size={24} />
-            </div>
-            <h1>Premium CRUD</h1>
+      <header style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '2rem 0',
+        marginBottom: '1rem'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+          <div style={{
+            background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
+            padding: '12px',
+            borderRadius: '16px',
+            display: 'flex',
+            boxShadow: '0 8px 16px -4px var(--primary-glow)'
+          }}>
+            <Package color="white" size={28} strokeWidth={2.5} />
           </div>
-          <button onClick={handleCreate} className="btn btn-primary">
-            <Plus size={20} />
-            <span>Add Item</span>
-          </button>
+          <div>
+            <h1>Inventory Management CRUD App</h1>
+            <p style={{ color: 'var(--text-scnd)', fontSize: '0.9rem', marginTop: '0.25rem' }}>Precise control over your inventory</p>
+          </div>
         </div>
+        <button onClick={handleCreate} className="btn btn-primary">
+          <Plus size={20} strokeWidth={2.5} />
+          <span>New Item</span>
+        </button>
+      </header>
 
+      <div className="glass-panel">
         {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '300px' }}>
             <div className="loading-spinner"></div>
           </div>
         ) : items.length === 0 ? (
           <div className="empty-state">
-            <h3>No items found</h3>
-            <p>Create your first item to get started</p>
+            <Package size={48} style={{ marginBottom: '1.5rem', opacity: 0.2 }} />
+            <h3>No items yet</h3>
+            <p>Your workspace is empty. Start by creating your first record.</p>
+            <button
+              onClick={handleCreate}
+              className="btn btn-secondary"
+              style={{ marginTop: '2rem' }}
+            >
+              <Plus size={18} />
+              Create Item
+            </button>
           </div>
         ) : (
-          <div className="grid-list">
-            {items.map(item => (
-              <ItemCard
-                key={item.id}
-                item={item}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            ))}
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+              <div className="badge">Total Items: {items.length}</div>
+            </div>
+            <div className="grid-list">
+              {items.map(item => (
+                <ItemCard
+                  key={item.id}
+                  item={item}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>
